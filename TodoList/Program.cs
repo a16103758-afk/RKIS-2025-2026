@@ -53,6 +53,10 @@
                         MarkDone(parts);
                         break;
 
+                    case "delete":
+                        DeleteTask(parts);
+                        break;
+
                     case "exit":
                         return;
                 }
@@ -120,6 +124,25 @@
                     statuses[index] = true;
                     dates[index] = DateTime.Now;
                     Console.WriteLine("Задача выполнена");
+                }
+            }
+        }
+
+        static void DeleteTask(string[] parts)
+        {
+            if (parts.Length > 1)
+            {
+                int index = int.Parse(parts[1]) - 1;
+                if (index >= 0 && index < count)
+                {
+                    for (int i = index; i < count - 1; i++)
+                    {
+                        todos[i] = todos[i + 1];
+                        statuses[i] = statuses[i + 1];
+                        dates[i] = dates[i + 1];
+                    }
+                    count--;
+                    Console.WriteLine("Задача удалена");
                 }
             }
         }
