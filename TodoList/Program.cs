@@ -26,9 +26,20 @@
             {
                 Console.Write("Введите команду: ");
                 string command = Console.ReadLine();
+                string[] parts = input.Split(' ', 2);
+                string command = parts[0];
 
                 switch (command)
                 {
+                    case "add":
+                        if (parts.Length > 1)
+                        {
+                            todos[count] = parts[1];
+                            count++;
+                            Console.WriteLine("Задача добавлена");
+                        }
+                        break;
+                        
                     case "help":
                         Console.WriteLine("help - список команд");
                         Console.WriteLine("profile - данные пользователя");
