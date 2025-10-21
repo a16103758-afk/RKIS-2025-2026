@@ -68,6 +68,9 @@
                     case "profile":
                         Console.WriteLine($"Пользователь {firstName} {lastName}, возраст – {age}");
                         break;
+
+                    case "exit":
+                        return;
                 }
             }
         }
