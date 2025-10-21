@@ -3,6 +3,8 @@
     class Program
     {
         static string[] todos = new string[2];
+        static bool[] statuses = new bool[2];
+        static DateTime[] dates = new DateTime[2];
         static int count = 0;
 
         public static void Main()
@@ -56,11 +58,18 @@
         static void ExpandArrays()
         {
             string[] newTodos = new string[todos.Length * 2];
+            bool[] newStatuses = new bool[statuses.Length * 2];
+            DateTime[] newDates = new DateTime[dates.Length * 2];
+
             for (int i = 0; i < todos.Length; i++)
             {
                 newTodos[i] = todos[i];
+                newStatuses[i] = statuses[i];
+                newDates[i] = dates[i];
             }
             todos = newTodos;
+            statuses = newStatuses;
+            dates = newDates;
         }
 
         static void AddTask(string[] parts)
@@ -72,6 +81,8 @@
                     ExpandArrays();
                 }
                 todos[count] = parts[1];
+                statuses[count] = false;
+                dates[count] = DateTime.Now;
                 count++;
                 Console.WriteLine("Задача добавлена");
             }
@@ -81,7 +92,8 @@
         {
             for (int i = 0; i < count; i++)
             {
-                Console.WriteLine($"{i + 1}. {todos[i]}");
+                string status = statuses[i] ? "сделано" : "не сделано";
+                Console.WriteLine($"{i + 1}. {todos[i]} {status} {dates[i]}");
             }
         }
 
