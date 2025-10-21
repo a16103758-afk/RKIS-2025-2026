@@ -115,6 +115,9 @@
             Console.WriteLine("profile - данные пользователя");
             Console.WriteLine("add - добавить задачу");
             Console.WriteLine("view - показать задачи");
+            Console.WriteLine("done - отметить задачу выполненной");
+            Console.WriteLine("delete - удалить задачу");
+            Console.WriteLine("update - обновить задачу");
             Console.WriteLine("exit - выход");
         }
 
