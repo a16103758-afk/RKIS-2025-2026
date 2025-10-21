@@ -49,6 +49,10 @@
                         ShowProfile(firstName, lastName, age);
                         break;
 
+                    case "done":
+                        MarkDone(parts);
+                        break;
+
                     case "exit":
                         return;
                 }
@@ -104,6 +108,20 @@
             Console.WriteLine("add - добавить задачу");
             Console.WriteLine("view - показать задачи");
             Console.WriteLine("exit - выход");
+        }
+
+        static void MarkDone(string[] parts)
+        {
+            if (parts.Length > 1)
+            {
+                int index = int.Parse(parts[1]) - 1;
+                if (index >= 0 && index < count)
+                {
+                    statuses[index] = true;
+                    dates[index] = DateTime.Now;
+                    Console.WriteLine("Задача выполнена");
+                }
+            }
         }
 
         static void ShowProfile(string firstName, string lastName, int age)
