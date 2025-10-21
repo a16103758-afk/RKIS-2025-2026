@@ -25,7 +25,7 @@
             while (true)
             {
                 Console.Write("Введите команду: ");
-                string command = Console.ReadLine();
+                string input = Console.ReadLine();
                 string[] parts = input.Split(' ', 2);
                 string command = parts[0];
 
@@ -34,12 +34,29 @@
                     case "add":
                         if (parts.Length > 1)
                         {
+                            if (count >= todos.Length)
+                            {
+                                string[] newArray = new string[todos.Length * 2];
+                                for (int i = 0; i < todos.Length; i++)
+                                {
+                                    newArray[i] = todos[i];
+                                }
+                                todos = newArray;
+                            }
+
                             todos[count] = parts[1];
                             count++;
                             Console.WriteLine("Задача добавлена");
                         }
                         break;
-                        
+
+                    case "view":
+                        for (int i = 0; i < count; i++)
+                        {
+                            Console.WriteLine((i + 1) + ". " + todos[i]);
+                        }
+                        break;
+
                     case "help":
                         Console.WriteLine("help - список команд");
                         Console.WriteLine("profile - данные пользователя");
