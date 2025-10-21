@@ -57,6 +57,10 @@
                         DeleteTask(parts);
                         break;
 
+                    case "update":
+                        UpdateTask(parts);
+                        break;
+
                     case "exit":
                         return;
                 }
@@ -112,6 +116,24 @@
             Console.WriteLine("add - добавить задачу");
             Console.WriteLine("view - показать задачи");
             Console.WriteLine("exit - выход");
+        }
+
+        static void UpdateTask(string[] parts)
+        {
+            if (parts.Length > 1)
+            {
+                string[] updateParts = parts[1].Split(' ', 2);
+                if (updateParts.Length > 1)
+                {
+                    int index = int.Parse(updateParts[0]) - 1;
+                    if (index >= 0 && index < count)
+                    {
+                        todos[index] = updateParts[1];
+                        dates[index] = DateTime.Now;
+                        Console.WriteLine("Задача обновлена");
+                    }
+                }
+            }
         }
 
         static void MarkDone(string[] parts)
