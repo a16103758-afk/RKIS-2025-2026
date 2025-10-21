@@ -36,6 +36,10 @@
                         Console.WriteLine("view - показать задачи");
                         Console.WriteLine("exit - выход");
                         break;
+
+                    case "profile":
+                        Console.WriteLine($"Пользователь {firstName} {lastName}, возраст – {age}");
+                        break;
                 }
             }
         }
