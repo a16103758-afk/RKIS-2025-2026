@@ -38,7 +38,7 @@
                         break;
 
                     case "view":
-                        ViewTasks();
+                        ViewTasks(parts);
                         break;
 
                     case "help":
@@ -100,13 +100,61 @@
             }
         }
 
-        static void ViewTasks()
+        static void ViewTasks(string[] parts)
         {
-            for (int i = 0; i < count; i++)
-            {
-                string status = statuses[i] ? "сделано" : "не сделано";
-                Console.WriteLine($"{i + 1}. {todos[i]} {status} {dates[i]}");
-            }
+                bool showIndex = false;
+                bool showStatus = false;
+                bool showDate = false;
+                bool showAll = false;
+
+                if (parts.Length > 1)
+                {
+                    string flags = parts[1];
+                    showIndex = flags.Contains("-i") || flags.Contains("i") || flags.Contains("--index");
+                    showStatus = flags.Contains("-s") || flags.Contains("s") || flags.Contains("--status");
+                    showDate = flags.Contains("-d") || flags.Contains("d") || flags.Contains("--update-date");
+                    showAll = flags.Contains("-a") || flags.Contains("a") || flags.Contains("--all");
+                }
+
+                if (showAll)
+                {
+                    showIndex = true;
+                    showStatus = true;
+                    showDate = true;
+                }
+
+                string header = "";
+                if (showIndex) header += "№       ";
+                if (showStatus) header += "Статус       ";
+                header += "Текст                          ";
+                if (showDate) header += "Дата изменения";
+
+                Console.WriteLine(header);
+                Console.WriteLine(new string('-', header.Length));
+
+                for (int i = 0; i < count; i++)
+                {
+                    string row = "";
+
+                    if (showIndex) 
+                        row += $"{i + 1}       ".Substring(0, 8);
+
+                    if (showStatus)
+                    {
+                        string status = statuses[i] ? "Выполнено   " : "Не выполнено ";
+                        row += status;
+                    }
+
+                    string taskText = todos[i].Replace("\n", " ");
+                    if (taskText.Length > 31)
+                        taskText = taskText.Substring(0, 27) + "...";
+                    row += taskText + new string(' ', 31 - taskText.Length);
+
+                    if (showDate)
+                        row += dates[i].ToString("dd.MM.yyyy HH:mm");
+
+                    Console.WriteLine(row);
+                }
         }
 
         static void ShowHelp()
