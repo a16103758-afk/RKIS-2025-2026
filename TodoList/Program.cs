@@ -88,11 +88,30 @@
         {
             if (parts.Length > 1)
             {
+                string taskText = parts[1];
+                
+                if (taskText == "--multiline" || taskText == "-m")
+                {
+                    string multilineText = "";
+                    string line;
+
+                    while (true)
+                    {
+                        Console.Write("> ");
+                        line = Console.ReadLine();
+                        if (line == "!end")
+                            break;
+                        multilineText += line + "\n";
+                    }
+                    
+                    taskText = multilineText.Trim();
+                }
+
                 if (count >= todos.Length)
                 {
                     ExpandArrays();
                 }
-                todos[count] = parts[1];
+                todos[count] = taskText;
                 statuses[count] = false;
                 dates[count] = DateTime.Now;
                 count++;
