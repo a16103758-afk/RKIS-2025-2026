@@ -61,6 +61,10 @@
                         UpdateTask(parts);
                         break;
 
+                    case "read":
+                        ReadTask(parts);
+                        break;
+
                     case "exit":
                         return;
                 }
@@ -116,6 +120,20 @@
                 dates[count] = DateTime.Now;
                 count++;
                 Console.WriteLine("Задача добавлена");
+            }
+        }
+
+        static void ReadTask(string[] parts)
+        {
+            if (parts.Length > 1)
+            {
+                int index = int.Parse(parts[1]) - 1;
+                if (index >= 0 && index < count)
+                {
+                    Console.WriteLine($"Полный текст: {todos[index]}");
+                    Console.WriteLine($"Статус: {(statuses[index] ? "выполнена" : "не выполнена")}");
+                    Console.WriteLine($"Дата изменения: {dates[index]:dd.MM.yyyy HH:mm}");
+                }
             }
         }
 
@@ -181,7 +199,9 @@
             Console.WriteLine("help - список команд");
             Console.WriteLine("profile - данные пользователя");
             Console.WriteLine("add - добавить задачу");
-            Console.WriteLine("view - показать задачи");
+            Console.WriteLine("add -m - добавить задачу в многострочном режиме");
+            Console.WriteLine("view -i, -s, -d, -a - показать задачи");
+            Console.WriteLine("read - просмотреть полный текст задачи");
             Console.WriteLine("done - отметить задачу выполненной");
             Console.WriteLine("delete - удалить задачу");
             Console.WriteLine("update - обновить задачу");
