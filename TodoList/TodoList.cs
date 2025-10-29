@@ -52,7 +52,7 @@ namespace TodoList
 
                 if (showDone)
                 {
-                    string status = _items[i].IsDone ? "Выполнено   " : "Не выполнено ";
+                    string status = _items[i].IsDone ? "Выполнено    " : "Не выполнено ";
                     row += status;
                 }
 
