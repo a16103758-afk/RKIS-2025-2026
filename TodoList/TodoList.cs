@@ -1,3 +1,5 @@
+using System;
+
 namespace TodoList
 {
     public class TodoList
@@ -66,6 +68,11 @@ namespace TodoList
 
                 Console.WriteLine(row);
             }
+        }
+
+        public int GetCount()
+        {
+            return _count;
         }
 
         public TodoItem GetItem(int index)

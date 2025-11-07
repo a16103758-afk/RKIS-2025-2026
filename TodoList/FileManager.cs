@@ -81,11 +81,11 @@ namespace TodoList
         }
 
         private static string EscapeCsv(string text) =>
-            return "\"" + text.Replace("\"", "\"\"").Replace("\n", "\\n") + "\"";
+            "\"" + text.Replace("\"", "\"\"").Replace("\n", "\\n") + "\"";
 
 
         private static string UnescapeCsv(string text) =>
-            return text.Trim('"').Replace("\"\"", "\"").Replace("\\n", "\n");
+            text.Trim('"').Replace("\"\"", "\"").Replace("\\n", "\n");
 
     }
 }
