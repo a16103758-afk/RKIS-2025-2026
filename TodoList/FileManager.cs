@@ -48,9 +48,8 @@ namespace TodoList
             {
                 var item = todos.GetItem(i);
                 string escapedText = EscapeCsv(item.Text);
-                lines[i] = $"{i + 1};{item.IsDone};{item.LastUpdate:yyyy-MM-ddTHH:mm:ss};{escapedText}";
+                lines[i] = $"{i + 1};{item.Status};{item.LastUpdate:yyyy-MM-ddTHH:mm:ss};{escapedText}";
             }
-            
             File.WriteAllLines(filePath, lines);
         }
 
@@ -67,13 +66,12 @@ namespace TodoList
                 var parts = line.Split(';');
                 if (parts.Length >= 4)
                 {
-                    int index = int.Parse(parts[0]);
-                    bool isDone = bool.Parse(parts[1]);
+                    TodoStatus status = Enum.Parse<TodoStatus>(parts[1]);
                     DateTime lastUpdate = DateTime.Parse(parts[2]);
                     string text = string.Join(";", parts, 3, parts.Length - 3);
                     text = UnescapeCsv(text);
                     
-                    var item = new TodoItem(text, isDone, lastUpdate);
+                    var item = new TodoItem(text, status, lastUpdate);
                     todoList.Add(item);
                 }
             }

@@ -19,10 +19,10 @@ namespace TodoList
             _lastUpdate = DateTime.Now;
         }
 
-        public TodoItem(string text, bool isDone, DateTime lastUpdate)
+        public TodoItem(string text, TodoStatus status, DateTime lastUpdate)
         {
             _text = text;
-            _status = isDone ? TodoStatus.Completed : TodoStatus.NotStarted;
+            _status = status;
             _lastUpdate = lastUpdate;
         }
 
