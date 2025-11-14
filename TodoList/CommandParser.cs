@@ -18,24 +18,24 @@ namespace TodoList
 
                 case "view":
                     bool showIndex = false;
-                    bool showDone = false;
+                    bool showStatus = false;
                     bool showDate = false;
 
                     if (parts.Length > 1)
                     {
                         string flags = parts[1];
                         showIndex = flags.Contains("-i") || flags.Contains("i") || flags.Contains("--index");
-                        showDone = flags.Contains("-s") || flags.Contains("s") || flags.Contains("--status");
+                        showStatus = flags.Contains("-s") || flags.Contains("s") || flags.Contains("--status");
                         showDate = flags.Contains("-d") || flags.Contains("d") || flags.Contains("--update-date");
 
                         if (flags.Contains("-a") || flags.Contains("a") || flags.Contains("--all"))
                         {
                             showIndex = true;
-                            showDone = true;
+                            showStatus = true;
                             showDate = true;
                         }
                     }
-                    return new ViewCommand(todoList, showIndex, showDone, showDate);
+                    return new ViewCommand(todoList, showIndex, showStatus, showDate);
 
                 case "read":
                     if (parts.Length > 1)
@@ -45,11 +45,24 @@ namespace TodoList
                     }
                     break;
 
-                case "done":
+                case "status":
                     if (parts.Length > 1)
                     {
-                        int index = int.Parse(parts[1]) - 1;
-                        return new DoneCommand(todoList, index);
+                        string[] statusParts = parts[1].Split(' ', 2);
+                        if (statusParts.Length == 2)
+                        {
+                            int index = int.Parse(statusParts[0]) - 1;
+                            TodoStatus status = statusParts[1].ToLower() switch
+                            {
+                                "notstarted" => TodoStatus.NotStarted,
+                                "inprogress" => TodoStatus.InProgress,
+                                "completed" => TodoStatus.Completed,
+                                "postponed" => TodoStatus.Postponed,
+                                "failed" => TodoStatus.Failed,
+                                _ => throw new ArgumentException($"Неизвестный статус: {statusParts[1]}")
+                            };
+                            return new StatusCommand(todoList, index, status);
+                        }
                     }
                     break;
 
