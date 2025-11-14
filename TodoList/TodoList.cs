@@ -2,60 +2,50 @@ using System;
 
 namespace TodoList
 {
-    public class TodoList
+    public class TodoList : IEnumerable<TodoItem>
     {
-        private TodoItem[] _items;
-        private int _count;
+        private List<TodoItem> _items;
 
-        public TodoList(int capacity = 10)
+        public TodoList()
         {
-            _items = new TodoItem[capacity];
-            _count = 0;
+            _items = new List<TodoItem>();
         }
 
         public void Add(TodoItem item)
         {
-            if (_count >= _items.Length)
-            {
-                IncreaseArray();
-            }
-            _items[_count++] = item;
+            _items.Add(item);
         }
 
         public void Delete(int index)
         {
-            if (index >= 0 && index < _count)
+            if (index >= 0 && index < _items.Count)
             {
-                for (int i = index; i < _count - 1; i++)
-                {
-                    _items[i] = _items[i + 1];
-                }
-                _count--;
+                _items.RemoveAt(index);
             }
         }
 
-        public void View(bool showIndex, bool showDone, bool showDate)
+        public void View(bool showIndex, bool showStatus, bool showDate)
         {
             string header = "";
             if (showIndex) header += "№       ";
-            if (showDone) header += "Статус       ";
+            if (showStatus) header += "Статус           ";
             header += "Текст                          ";
             if (showDate) header += "Дата изменения";
 
             Console.WriteLine(header);
             Console.WriteLine(new string('-', header.Length));
 
-            for (int i = 0; i < _count; i++)
+            for (int i = 0; i < _items.Count; i++)
             {
                 string row = "";
 
                 if (showIndex)
                     row += $"{i + 1}       ".Substring(0, 8);
 
-                if (showDone)
+                if (showStatus)
                 {
-                    string status = _items[i].IsDone ? "Выполнено    " : "Не выполнено ";
-                    row += status;
+                    string status = _items[i].Status.ToString();
+                    row += $"{status,-16}";
                 }
 
                 string taskText = _items[i].Text.Replace("\n", " ");
@@ -70,28 +60,48 @@ namespace TodoList
             }
         }
 
+        public void SetStatus(int index, TodoStatus status)
+        {
+            if (index >= 0 && index < _items.Count)
+            {
+                _items[index].SetStatus(status);
+            }
+        }
+
         public int GetCount()
         {
-            return _count;
+            return _items.Count;
         }
 
         public TodoItem GetItem(int index)
         {
-            if (index >= 0 && index < _count)
+            if (index >= 0 && index < _items.Count)
             {
                 return _items[index];
             }
             return null;
         }
 
-        private void IncreaseArray()
+        public TodoItem this[int index]
         {
-            TodoItem[] newItems = new TodoItem[_items.Length * 2];
-            for (int i = 0; i < _items.Length; i++)
+            get
             {
-                newItems[i] = _items[i];
+                if (index >= 0 && index < _items.Count)
+                {
+                    return _items[index];
+                }
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
-            _items = newItems;
         }
+
+        public IEnumerator<TodoItem> GetEnumerator()
+        {
+            for (int i = 0; i < _items.Count; i++)
+            {
+                yield return _items[i];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
