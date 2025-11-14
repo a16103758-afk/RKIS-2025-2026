@@ -10,7 +10,7 @@
 - add -m - добавить задачу в многострочном режиме
 - view - просмотр списка всех задач
 - read - полный просмотр задачи
-- done - отметка задачи выполненной
+- status - изменение статуса задачи
 - delete - удаление задачи по индексу
 - update - обновление текста задачи
 - exit - завершение работы программы
@@ -34,13 +34,20 @@
 - AddCommand - добавление задач
 - ViewCommand - просмотр задач
 - ReadCommand - полный просмотр задачи
-- DoneCommand - отметка задачи выполненной
+- StatusCommand - изменение статуса задачи
 - DeleteCommand - удаление задачи
 - UpdateCommand - обновление текста задачи
 - ProfileCommand - отображение профиля пользователя
 - HelpCommand - справка по командам
 - CommandParser - создатель команд
 
+Статусы задач:
+- NotStarted - не начато
+- InProgress - в процессе
+- Completed - выполнено
+- Postponed - отложено
+- Failed - провалено
+
 Файлы приложения:
 - profile.txt - хранит данные пользователя
-- todo.csv - хранит список задач в формате CSV (Index;Text;IsDone;LastUpdate)
+- todo.csv - хранит список задач в формате CSV (Index;IsDone;LastUpdate;Text)
